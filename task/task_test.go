@@ -23,3 +23,28 @@ func TestNewTaskWithEmptyTitle(t *testing.T) {
 		t.Errorf("Expected 'Empty title' error, got %v", err)
 	}
 }
+
+func TestSaveTask(t *testing.T) {
+	task := newTaskOrFatal(t, "learn Go")
+	m := NewTaskManager()
+	err := m.Save(task)
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
+}
+
+func TestSaveTaskAndRetrieve(t *testing.T) {
+	task := newTaskOrFatal(t, "learn Go")
+	m := NewTaskManager()
+	err := m.Save(task)
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
+	all := m.All()
+	if len(all) != 1 {
+		t.Errorf("Expected one task, got %v", len(all))
+	}
+	if all[0].Title != task.Title {
+		t.Errorf("Expected %v and got %v instead", task.Title, all[0].Title)
+	}
+}
