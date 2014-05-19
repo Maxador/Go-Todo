@@ -1,20 +1,23 @@
 package task
 
-import "errors"
+import "fmt"
 
 type Task struct {
+	ID int64
 	Title string
+	Done bool
 }
 
 type TaskManager struct {
-	task *Task
+	tasks []*Task
+	lastID int64
 }
 
 func NewTask(title string) (*Task, error) {
 	if title == "" {
-		return nil, errors.New("Empty title")
+		return nil, fmt.Errorf("Empty title")
 	}
-	return &Task{title}, nil
+	return &Task { 0, title, false }, nil
 }
 
 func NewTaskManager() *TaskManager {
@@ -22,10 +25,26 @@ func NewTaskManager() *TaskManager {
 }
 
 func (m *TaskManager) Save(task *Task) error {
-	m.task = task
-	return nil
+	if task.ID == 0 {
+		m.lastID++
+		task.ID = m.lastID
+		m.tasks = append(m.tasks, cloneTask(task))
+		return nil
+	}
+	for i, t := range m.tasks {
+		if t.ID == task.ID {
+			m.tasks[i] = cloneTask(task)
+			return nil
+		}
+	}
+	return fmt.Errorf("Unknown task")
+}
+
+func cloneTask(t *Task) *Task {
+	c := *t
+	return &c
 }
 
 func (m *TaskManager) All() []*Task {
-	return []*Task {m.task}
+	return m.tasks
 }

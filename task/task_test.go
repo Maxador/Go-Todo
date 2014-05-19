@@ -15,6 +15,9 @@ func TestNewTask(t *testing.T) {
 	if task.Title !=  "learn Go" {
 		t.Errorf("Expected learn Go, got %v", task.Title)
 	}
+	if task.Done {
+		t.Errorf("New task is done")
+	}
 }
 
 func TestNewTaskWithEmptyTitle(t *testing.T) {
