@@ -51,3 +51,23 @@ func TestSaveTaskAndRetrieve(t *testing.T) {
 		t.Errorf("Expected %v and got %v instead", task.Title, all[0].Title)
 	}
 }
+
+func TestSaveAndRetrieveTwoTasks(t *testing.T) {
+	learnGo := newTaskOrFatal(t, "learn Go")
+	learnTDD := newTaskOrFatal(t, "learn TDD")
+
+	m := NewTaskManager()
+	m.Save(learnGo)
+	m.Save(learnTDD)
+
+	all := m.All()
+	if len(all) != 2 {
+		t.Errorf("Expected two tasks, got %v", len(all))
+	}
+	if *all[0] != *learnGo && *all[1] != *learnGo {
+		t.Errorf("Missing task : %v", learnGo)
+	}
+	if *all[0] != *learnTDD && *all[1] != *learnTDD {
+		t.Errorf("Missing task : %v", learnTDD)
+	}
+}
