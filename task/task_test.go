@@ -91,9 +91,24 @@ func TestSaveTwiceAndRetrieve(t *testing.T) {
 	m.Save(task)
 	all := m.All()
 	if len(all) != 1 {
-		t.Errorf("Expected 1 task, got %v", len(all))
+		t.Errorf("Expected 1 task, instead got %v", len(all))
 	}
 	if *all[0] != *task {
-		t.Errorf("Expected task %v, got task %v", task, all[0])
+		t.Errorf("Expected task %v, instead got task %v", task, all[0])
+	}
+}
+
+func TestSaveAndFind(t *testing.T) {
+	task := newTaskOrFatal(t, "learn Go")
+
+	m := NewTaskManager()
+	m.Save(task)
+
+	foundTask, ok := m.Find(task.ID)
+	if !ok {
+		t.Errorf("Task not found")
+	}
+	if *task != *foundTask {
+		t.Errorf("Expected to find task %v, instead got task %v", task, foundTask)
 	}
 }

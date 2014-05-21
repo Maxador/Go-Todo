@@ -48,3 +48,12 @@ func cloneTask(t *Task) *Task {
 func (m *TaskManager) All() []*Task {
 	return m.tasks
 }
+
+func (m *TaskManager) Find(taskID int64) (*Task, bool) {
+	for _, t := range m.tasks {
+		if t.ID == taskID {
+			return t, true
+		}
+	}
+	return nil, false
+}
