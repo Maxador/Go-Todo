@@ -25,5 +25,11 @@ function TaskController($scope, $http) {
 			});
 	};
 
+	$scope.toggleDone = function(task) {
+		$score.working = true;
+		$http.get('/task/' + task.ID)
+			.success(function(data) {});
+	};
+
 	refresh().then(function() {$scope.working = false; });
 }

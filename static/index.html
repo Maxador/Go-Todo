@@ -16,7 +16,7 @@
 		</form>
 		<h2>Tasks</h2>
 		<ul ng-repeat="t in tasks">
-			<li>{{ t.Title }}</li>
+			<li><span><input type="checkbox" ng-click="toggleDone(t)">Check</span>{{ t.Title }}</li>
 		</ul>
 	</div>
 </body>
