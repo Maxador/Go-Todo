@@ -3,10 +3,12 @@ package main
 import (
 	"net/http"
 	"github.com/Maxador/Go-Todo/server"
+	"fmt"
 )
 
 func main() {
 	server.RegisterHandlers()
-	http.Handle("/", http.FileServer(http.Dir("server/static")))
+	http.Handle("/", http.FileServer(http.Dir("static")))
+	fmt.Printf("Listening on localhost:8080")
 	http.ListenAndServe(":8080", nil)
 }
