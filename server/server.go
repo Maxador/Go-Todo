@@ -73,7 +73,21 @@ func NewTask(w http.ResponseWriter, r *http.Request) error {
 }
 
 func UpdateTask(w http.ResponseWriter, r *http.Request) error {
-	return nil
+	id, err := parseID(r)
+	if err != nil {
+		return badRequest{err}
+	}
+	var t task.Task
+	if err := json.NewDecoder(r.Body).Decode(&t); err != nil {
+		return badRequest{err}
+	}
+	if t.ID != id {
+		return badRequest{fmt.Errorf("Inconsistent task IDs")}
+	}
+	if _, ok := tasks.Find(id); !ok {
+		return notFound{}
+	}
+	return tasks.Save(&t)
 }
 
 func GetTask(w http.ResponseWriter, r *http.Request) error {
@@ -83,7 +97,7 @@ func GetTask(w http.ResponseWriter, r *http.Request) error {
 	}
 	t, ok := tasks.Find(id)
 	if !ok {
-		return fmt.Errorf("Task not found")
+		return notFound{}
 	}
 	return json.NewEncoder(w).Encode(t)
 }

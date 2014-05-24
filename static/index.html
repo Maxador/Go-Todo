@@ -15,8 +15,8 @@
 			<button ng-click="addTodo()">Add Task</button>
 		</form>
 		<h2>Tasks</h2>
-		<ul ng-repeat="t in tasks">
-			<li><span><input type="checkbox" ng-click="toggleDone(t)">Check</span>{{ t.Title }}</li>
+		<ul>
+			<li ng-repeat="t in tasks" ng-class="{done: t.Done}"><span ng-click="toggleDone(t)">Check</span>{{ t.Title }}</li>
 		</ul>
 	</div>
 </body>
