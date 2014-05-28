@@ -29,7 +29,9 @@ function TaskController($scope, $http) {
 		data = {ID: task.ID, Title: task.Title, Done: !task.Done};
 		$http.put('/task/' + task.ID, data).
 			error(logError).
-			success(function() {task.Done = !task.Done});		
+			success(function() {
+				task.Done = !task.Done;
+			});		
 	};
 
 	refresh().then(function() {$scope.working = false; });

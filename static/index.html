@@ -3,8 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Go Todo</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+	<script src="/angular.min.js"></script>
 	<script src="/todo.js"></script>
+	<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 	<h1>Go Todo</h1>
@@ -16,7 +17,9 @@
 		</form>
 		<h2>Tasks</h2>
 		<ul>
-			<li ng-repeat="t in tasks" ng-class="{done: t.Done}"><span ng-click="toggleDone(t)">Check</span>{{ t.Title }}</li>
+			<li ng-repeat="t in tasks" ng-class="{done: t.Done}">
+				<input type="checkbox" ng-click="toggleDone(t)" ng-checked="t.Done">{{ t.Title }}
+			</li>
 		</ul>
 	</div>
 </body>
