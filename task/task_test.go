@@ -112,3 +112,15 @@ func TestSaveAndFind(t *testing.T) {
 		t.Errorf("Expected to find task %v, instead got task %v", task, foundTask)
 	}
 }
+
+func TestFindAndDeleteTask(t *testing.T) {
+	task := newTaskOrFatal(t, "learn Go")
+
+	m := NewTaskManager()
+	m.Save(task)
+
+	ok := m.Delete(task.ID)
+	if !ok {
+		t.Errof("Task not deleted")
+	}
+}

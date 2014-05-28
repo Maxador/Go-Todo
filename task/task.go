@@ -57,3 +57,10 @@ func (m *TaskManager) Find(taskID int64) (*Task, bool) {
 	}
 	return nil, false
 }
+
+func (m *TaskManager) Delete(taskID int64) bool {
+	task, ok := m.Find(taskID)
+	if ok {
+		// Remove the task from the slice *Tasks[]
+	}
+}

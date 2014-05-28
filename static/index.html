@@ -18,7 +18,8 @@
 		<h2>Tasks</h2>
 		<ul>
 			<li ng-repeat="t in tasks" ng-class="{done: t.Done}">
-				<input type="checkbox" ng-click="toggleDone(t)" ng-checked="t.Done">{{ t.Title }}
+				<input type="checkbox" ng-click="toggleDone(t)" ng-checked="t.Done"><span ng-click="editableTask(t)">{{ t.Title }}</span>
+				<input type="button" value="delete" ng-click="deleteTask(t)">
 			</li>
 		</ul>
 	</div>

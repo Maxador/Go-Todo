@@ -1,6 +1,7 @@
 function TaskController($scope, $http) {
 	$scope.tasks = [];
 	$scope.working = false;
+	$scope.editable = false;
 
 	var logError = function(data, status) {
 		console.log('Code ' + status + ': ' + data);
@@ -32,6 +33,10 @@ function TaskController($scope, $http) {
 			success(function() {
 				task.Done = !task.Done;
 			});		
+	};
+
+	$scope.editableTask = function (task) {
+		
 	};
 
 	refresh().then(function() {$scope.working = false; });
