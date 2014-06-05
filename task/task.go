@@ -58,9 +58,23 @@ func (m *TaskManager) Find(taskID int64) (*Task, bool) {
 	return nil, false
 }
 
-func (m *TaskManager) Delete(taskID int64) bool {
-	task, ok := m.Find(taskID)
-	if ok {
-		// Remove the task from the slice *Tasks[]
+func (m *TaskManager) GetTaskIndex(taskID int64) (int, bool) {
+	for i, t := range m.tasks {
+		if t.ID == taskID {
+			return i, true
+		}
 	}
+	return -1, false
+}
+
+func (m *TaskManager) Delete(taskID int64) bool {
+	i, ok := m.GetTaskIndex(taskID)
+	if ok {
+		// copy(m.tasks[i:], m.tasks[i + 1:])
+		// m.tasks[len(m.tasks) - 1] = nil
+		// m.tasks = m.tasks[:len(m.tasks) - 1]
+		m.tasks = append(m.tasks[:i], m.tasks[i+1:]...)
+		return true
+	}
+	return false
 }

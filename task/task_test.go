@@ -121,6 +121,7 @@ func TestFindAndDeleteTask(t *testing.T) {
 
 	ok := m.Delete(task.ID)
 	if !ok {
-		t.Errof("Task not deleted")
+		t.Errorf("Task not deleted")
 	}
+	
 }

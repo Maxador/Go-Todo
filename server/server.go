@@ -22,6 +22,7 @@ func RegisterHandlers() {
 	r.HandleFunc(PathPrefix, errorHandler(NewTask)).Methods("POST")
 	r.HandleFunc(PathPrefix + "{id}", errorHandler(GetTask)).Methods("GET")
 	r.HandleFunc(PathPrefix + "{id}", errorHandler(UpdateTask)).Methods("PUT")
+	r.HandleFunc(PathPrefix + "{id}", errorHandler(DeleteTask)).Methods("DELETE")
 	http.Handle(PathPrefix, r)
 }
 
@@ -91,7 +92,7 @@ func UpdateTask(w http.ResponseWriter, r *http.Request) error {
 }
 
 func GetTask(w http.ResponseWriter, r *http.Request) error {
-	id, err:= parseID(r)
+	id, err := parseID(r)
 	if err != nil {
 		return badRequest{err}
 	}
@@ -100,4 +101,15 @@ func GetTask(w http.ResponseWriter, r *http.Request) error {
 		return notFound{}
 	}
 	return json.NewEncoder(w).Encode(t)
+}
+
+func DeleteTask(w http.ResponseWriter, r *http.Request) error {
+	id, err := parseID(r)
+	if err != nil {
+		return badRequest{err}
+	}
+	if ok := tasks.Delete(id); !ok {
+		return notFound{}
+	}
+	return nil
 }

@@ -35,8 +35,17 @@ function TaskController($scope, $http) {
 			});		
 	};
 
-	$scope.editableTask = function (task) {
-		
+	$scope.deleteTask = function(task) {
+		// data = {ID: task.ID, Title: task.Title, Done: task.Done};
+		$scope.working = true;
+		$http.delete('/task/' + task.ID)
+			.error(logError)
+			.success(function() {
+				console.log("Deleted!");
+				refresh().then(function() {
+					$scope.working = false;
+				});
+			});
 	};
 
 	refresh().then(function() {$scope.working = false; });
