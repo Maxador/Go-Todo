@@ -70,11 +70,9 @@ func (m *TaskManager) GetTaskIndex(taskID int64) (int, bool) {
 func (m *TaskManager) Delete(taskID int64) bool {
 	i, ok := m.GetTaskIndex(taskID)
 	if ok {
-		// copy(m.tasks[i:], m.tasks[i + 1:])
-		// m.tasks[len(m.tasks) - 1] = nil
-		// m.tasks = m.tasks[:len(m.tasks) - 1]
-		m.tasks = append(m.tasks[:i], m.tasks[i+1:]...)
-		return true
+		copy(m.tasks[i:], m.tasks[i+1:])
+		m.tasks[len(m.tasks)-1] = nil
+		m.tasks = m.tasks[:len(m.tasks)-1]
 	}
-	return false
+	return ok
 }
